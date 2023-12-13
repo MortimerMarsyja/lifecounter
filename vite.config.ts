@@ -1,5 +1,4 @@
 import fs from 'node:fs';
-import { resolve } from 'path';
 import { loadEnv } from 'vite';
 import svgr from "vite-plugin-svgr";
 
@@ -30,8 +29,10 @@ const config = defineConfig(({ mode }) => {
         '@icons': '/src/assets/icons',
         '@router': '/src/router',
         '@constants': '/src/constants',
-        '@typings': '/src/Typings',
-        '@assets': '/src/assets'
+        '@typings': '/src/typings',
+        '@assets': '/src/assets',
+        '@contexts': '/src/contexts',
+        '@reducers': '/src/reducers',
       }
     },
   };

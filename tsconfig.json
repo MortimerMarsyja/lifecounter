@@ -18,7 +18,9 @@
       "@router": ["src/router/index"],
       "@constants": ["src/constants/index"],
       "@typings/*": ["src/Typings/*"],
-      "@assets/*": ["src/assets/*"]
+      "@assets/*": ["src/assets/*"],
+      "@contexts/*": ["src/contexts/*"],
+      "@reducers/*": ["src/reducers/*"],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",
