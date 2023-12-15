@@ -1,19 +1,6 @@
-import { UUID } from "crypto";
+import { iPlayer } from "../Player";
 
-export interface iPlayer {
-  startingLifeTotal: number;
-  lifeTotal: number;
-  poisonCounters: number;
-  isDead: boolean;
-  isAscended: boolean;
-  isMonarch: boolean;
-  isNemesis: boolean;
-  hasInitiative: boolean;
-  name: string;
-  id: UUID;
-  color: string;
-  commanderDamage: Array<{ name: string; damage: number,playerId:UUID }>;
-}
+
 
 export type iDayNight = false | 'day' | 'night';
 

@@ -32,6 +32,16 @@ const GameContextProvider: FC<GameContextProviderProps> = ({ children }:Props) =
     })
   }
 
+  const setNemesis = (playerId:UUID,isNemesis?:boolean) => {
+    dispatch({
+      type:GameActionTypes.SET_NEMESIS,
+      payload:{
+        id:playerId,
+        ...isNemesis && {isNemesis}
+      }
+    })
+  }
+
   const dealCommanderDamage = (playerId:UUID, damage:number,targetPlayerId:UUID) => {
     dispatch({
       type:GameActionTypes.UPDATE_COMMANDER_DAMAGE,
@@ -115,6 +125,7 @@ const GameContextProvider: FC<GameContextProviderProps> = ({ children }:Props) =
       updatePlayerName,
       addPoison,
       setInitiative,
+      setNemesis,
       }}>
       {children}
     </GameContext.Provider>

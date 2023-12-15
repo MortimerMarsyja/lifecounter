@@ -20,6 +20,7 @@ interface GameContextProps {
   setAscended: (playerId:UUID) => void;
   setMonarch: (playerId:UUID) => void;
   setDead: (playerId:UUID,isDead?:boolean) => void;
+  setNemesis: (playerId:UUID,isNemesis?:boolean) => void;
   setInitiative: (playerId:UUID) => void;
 }
 
@@ -37,6 +38,7 @@ export const GameContext = createContext<GameContextProps>({
   setMonarch: () => { },
   setDead: () => { },
   setInitiative: () => { },
+  setNemesis: () => { },
 });
 
 const useGameContext = () => useContext(GameContext);

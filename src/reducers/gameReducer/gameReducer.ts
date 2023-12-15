@@ -1,5 +1,6 @@
 import { UUID } from "crypto";
-import { iDayNight, iGame, iPlayer } from "src/typings/GameTypes";
+import { iDayNight, iGame } from "src/typings/GameTypes";
+import { IntRange0To21, iPlayer } from "src/typings/Player";
 import { v4 as uuidv4 } from 'uuid';
 
 export const gameInitialState = {
@@ -16,7 +17,7 @@ const handleGenerateCommanderDamage = (playersAmount: number,playerIds:UUID[]) =
   for(let i = 0; i < playersAmount; i++) {
     commanderDamage.push({
       name: `Player ${i + 1}`,
-      damage: 0,
+      damage: 0 as IntRange0To21,
       playerId: playerIds[i],
     });
   }
@@ -47,8 +48,8 @@ const handlePopulatePlayers = (playersAmount: number) => {
       hasInitiative: false,
       isAscended: false,
       isNemesis: false,
-      commanderDamage: handleGenerateCommanderDamage(playersAmount,playerIds),
-      color: colors[i],
+      background: colors[i],
+      commanderDamage: handleGenerateCommanderDamage(playersAmount,playerIds as UUID[]),
     });
   }
   return players satisfies iPlayer[];
@@ -59,6 +60,7 @@ export enum GameActionTypes {
   SET_ASCENDED = 'SET_ASCENDED',
   SET_MONARCH = 'SET_MONARCH',
   SET_INITIATIVE = 'SET_INITIATIVE',
+  SET_NEMESIS = 'SET_NEMESIS',
   SET_DEAD = 'SET_DEAD',
   ADD_POISON = 'ADD_POISON',
   UPDATE_LIFE_TOTAL = 'UPDATE_LIFE_TOTAL',
@@ -76,6 +78,11 @@ type changePlayersAmount = {
 type setAscended = { 
   type: GameActionTypes.SET_ASCENDED; 
   payload: { id: UUID; isAscended?: boolean } 
+};
+
+type setNemesis = {
+  type: GameActionTypes.SET_NEMESIS;
+  payload: { id: UUID; isNemesis?: boolean } 
 };
 
 type setMonarch = { 
@@ -128,7 +135,8 @@ export type GameActions =
   | updateLifeTotal
   | updateCommanderDamage
   | updatePlayerName
-  | updateDayNightCycle;
+  | updateDayNightCycle
+  | setNemesis;
 
 // Reducer
 export const gameReducer = (state: iGame , action: GameActions): iGame  => {
@@ -236,6 +244,16 @@ export const gameReducer = (state: iGame , action: GameActions): iGame  => {
         ...state,
         dayNight: payload,
       };
+      case GameActionTypes.SET_NEMESIS:
+        return {
+          ...state,
+          players: state.players.map((player: iPlayer) => {
+            if (player.id === action.payload.id) {
+              return { ...player, isNemesis: payload.isNemesis ? payload.isNemesis : !player.isNemesis };
+            }
+            return player;
+          }),
+        };
     default:
       return state;
   }
