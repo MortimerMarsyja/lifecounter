@@ -41,7 +41,7 @@ const PlayerStates = ({ playerObject }:Props) => {
   }
 
   return(
-    <div className="flex gap-3 absolute top-3 right-3 z-10">
+    <div className="flex gap-3 absolute top-3 left-1/2 -translate-x-1/2 z-10">
       <IconButton 
         onClick={handleSetMonarch}>
         <Crown color={playerObject.isMonarch? '#0066cc': '#6e6e73'}/>

@@ -5,6 +5,7 @@ import useGameContext from "@contexts/GameContext/gameContext";
 import { UUID } from "crypto";
 import IconButton from "@components/IconButton";
 import PlayerStates from "@components/PlayerStates";
+import SelfUpdateText from "@components/SelfUpdateText";
 
 interface LifeCounterProps {
   startingLife?: number;
@@ -14,9 +15,12 @@ interface LifeCounterProps {
 
 const LifeCounter = ({ startingLife = 40, currentLife, id }: LifeCounterProps): JSX.Element => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const { updateLifeTotal, game, setDead } = useGameContext()
+  const { updateLifeTotal, game, setDead,updatePlayerName } = useGameContext()
   const handleClose = () => {
     setMenuOpen(false)
+  }
+  const handleUpdatePlayerName = (newName:string) => {
+    updatePlayerName(id,newName)
   }
   const toggleMenu = () => {
     setMenuOpen((menuOpen) => !menuOpen)
@@ -43,9 +47,10 @@ const LifeCounter = ({ startingLife = 40, currentLife, id }: LifeCounterProps): 
         justify-center 
       relative">
         {playerObject && <PlayerStates playerObject={playerObject} />}
+        {playerObject && <SelfUpdateText initialVal={playerObject.name} onUpdate={handleUpdatePlayerName} />}
         <Button
           disabled={game.players.find((player) => player.id === id)?.isDead}
-          className="w-full h-full hover:bg-sky-700	transition-all ease-in-out duration-500"
+          className="w-full h-full hover:bg-gray-500	transition-all ease-in-out duration-500"
           onClick={() => {
             updateLifeTotal((currentLife || startingLife) - 1, id)
           }}
@@ -57,7 +62,7 @@ const LifeCounter = ({ startingLife = 40, currentLife, id }: LifeCounterProps): 
         </IconButton>
         <Button
           disabled={game.players.find((player) => player.id === id)?.isDead}
-          className="w-full h-full hover:bg-sky-700	transition-all ease-in-out duration-500"
+          className="w-full h-full hover:bg-gray-500	transition-all ease-in-out duration-500"
           onClick={() => {
             updateLifeTotal((currentLife || startingLife) + 1, id)
           }}

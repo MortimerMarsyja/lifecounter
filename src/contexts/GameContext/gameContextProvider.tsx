@@ -110,6 +110,13 @@ const GameContextProvider: FC<GameContextProviderProps> = ({ children }:Props) =
     })
   }
 
+  const setDayNight = (dayNight:iDayNight) => {
+    dispatch({
+      type:GameActionTypes.UPDATE_DAY_NIGHT_CYCLE,
+      payload:dayNight
+    })
+  }
+
   return (
     <GameContext.Provider value={{ 
       startingLifeTotal,
@@ -126,6 +133,7 @@ const GameContextProvider: FC<GameContextProviderProps> = ({ children }:Props) =
       addPoison,
       setInitiative,
       setNemesis,
+      setDayNight
       }}>
       {children}
     </GameContext.Provider>

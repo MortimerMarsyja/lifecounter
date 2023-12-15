@@ -1,3 +1,4 @@
+import Game from "@views/Game";
 import { UUID } from "crypto";
 import { iDayNight, iGame } from "src/typings/GameTypes";
 import { IntRange0To21, iPlayer } from "src/typings/Player";
@@ -254,6 +255,7 @@ export const gameReducer = (state: iGame , action: GameActions): iGame  => {
             return player;
           }),
         };
+
     default:
       return state;
   }

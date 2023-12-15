@@ -1,12 +1,7 @@
 import PoisonCounter from "@components/LifeCounter/PoisonCounter";
 import useGameContext from "@contexts/GameContext/gameContext";
-import Skull from "@icons/Skull";
-import Ascend from "@icons/Ascend";
 import { iPlayer } from "src/typings/Player";
-import Crown from "@icons/Crown";
-import Icosahedron from "@icons/Icosahedron";
 import CommanderQuadrants from "@components/CommanderQuadrants";
-import IconButton from "@components/IconButton";
 
 interface MenuCounterProps {
   playerObject: iPlayer;

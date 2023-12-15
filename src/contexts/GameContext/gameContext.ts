@@ -22,6 +22,7 @@ interface GameContextProps {
   setDead: (playerId:UUID,isDead?:boolean) => void;
   setNemesis: (playerId:UUID,isNemesis?:boolean) => void;
   setInitiative: (playerId:UUID) => void;
+  setDayNight: (dayNight:iDayNight) => void;
 }
 
 export const GameContext = createContext<GameContextProps>({
@@ -39,6 +40,7 @@ export const GameContext = createContext<GameContextProps>({
   setDead: () => { },
   setInitiative: () => { },
   setNemesis: () => { },
+  setDayNight: () => { },
 });
 
 const useGameContext = () => useContext(GameContext);
