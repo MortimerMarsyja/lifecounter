@@ -3,7 +3,7 @@ interface CenteredLayoutProps {
 }
 
 const CenteredLayout = ({ children }:CenteredLayoutProps):JSX.Element => (
-  <div className="flex w-full items-center justify-center min-h-screen bg-[#fff]">
+  <div className="flex w-full items-center justify-center h-full bg-[#fff]">
     {children}
   </div>
 );

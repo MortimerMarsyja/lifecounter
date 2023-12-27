@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import { loadEnv } from 'vite';
 import svgr from "vite-plugin-svgr";
+import styleX from "vite-plugin-stylex";
+
 
 import { defineConfig } from 'vite';
 
@@ -14,7 +16,7 @@ const config = defineConfig(({ mode }) => {
   };
 
   return {
-    plugins: [svgr()],
+    plugins: [svgr(),styleX()],
     resolve: {
       preserveSymlinks: true,
       // TODO remove from here when migrated to typescript and styled-components

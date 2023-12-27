@@ -18,9 +18,19 @@ const CommanderDamage = ({onAdd,onSubtract,currentDmg,on21Dmg,isDead}:Props) => 
   }, [currentDmg])
   return (
     <div className="flex items-center justify-around w-full h-full relative">
-        <Button className="w-full h-full hover:bg-sky-700" fh disabled={currentDmg === 0 || isDead} onClick={onSubtract}>-</Button>
+        <Button className="
+          w-full 
+          h-full 
+          hover:bg-gray-500 
+          hover:text-white
+        " fh disabled={currentDmg === 0 || isDead} onClick={onSubtract}>-</Button>
           <span className="absolute">{currentDmg}</span>
-        <Button className="w-full h-full hover:bg-sky-700" fh disabled={currentDmg === 21 || isDead} onClick={onAdd}>+</Button>
+        <Button className="
+          w-full 
+          h-full 
+          hover:bg-gray-500 
+          hover:text-white
+        " fh disabled={currentDmg === 21 || isDead} onClick={onAdd}>+</Button>
     </div>
   );
 }

@@ -21,6 +21,8 @@
       "@assets/*": ["src/assets/*"],
       "@contexts/*": ["src/contexts/*"],
       "@reducers/*": ["src/reducers/*"],
+      "@store/*": ["src/store/*"],
+      "@utils/*": ["src/utils/*"]
     },
     /* Bundler mode */
     "moduleResolution": "bundler",

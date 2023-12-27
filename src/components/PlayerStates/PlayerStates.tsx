@@ -1,24 +1,25 @@
 import IconButton from "@components/IconButton"
-import useGameContext from "@contexts/GameContext/gameContext"
 import Ascend from "@icons/Ascend"
 import Crown from "@icons/Crown"
 import Eye from "@icons/Eye"
 import Icosahedron from "@icons/Icosahedron"
 import Skull from "@icons/Skull"
+import useGameStore from "@store/useGameStore"
 import { iPlayer } from "src/typings/Player"
 
 interface Props {
   playerObject: iPlayer
+  className?: string
 }
 
-const PlayerStates = ({ playerObject }:Props) => {
+const PlayerStates = ({ playerObject,className }:Props) => {
   const {
     setDead,
     setAscended,
     setMonarch,
     setInitiative,
     setNemesis,
-  } = useGameContext()
+  } = useGameStore()
 
   const handleSetMonarch = () => {
     setMonarch(playerObject.id)
@@ -41,7 +42,7 @@ const PlayerStates = ({ playerObject }:Props) => {
   }
 
   return(
-    <div className="flex gap-3 absolute top-3 left-1/2 -translate-x-1/2 z-10">
+    <div className={className}>
       <IconButton 
         onClick={handleSetMonarch}>
         <Crown color={playerObject.isMonarch? '#0066cc': '#6e6e73'}/>

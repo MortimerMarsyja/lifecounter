@@ -1,5 +1,5 @@
 import CommanderDamage from "@components/CommanderDamage";
-import useGameContext from "@contexts/GameContext/gameContext";
+import useGameStore from "@store/useGameStore";
 import { iPlayer } from "src/typings/Player";
 
 interface CommanderQuadrantProps {
@@ -7,35 +7,42 @@ interface CommanderQuadrantProps {
   playerObject:iPlayer;
 }
 
-const CommanderQuadrants = ({nPlayers,playerObject}:CommanderQuadrantProps) => {
+const CommanderQuadrants = ({
+  nPlayers,
+  playerObject
+}:CommanderQuadrantProps) => {
   const {
     dealCommanderDamage,
     updateLifeTotal,
     setDead,
-  } = useGameContext()
+  } = useGameStore()
   const quadrants = []
+    if(!playerObject.commanderDamage) return null
     for (let i = 0; i < nPlayers; i++) {
       const currentPlayerQuadrant = playerObject.commanderDamage[i]
       if(!currentPlayerQuadrant) continue
       quadrants.push(
-        <>
+        <div className="relative">
+          <p className="absolute">{currentPlayerQuadrant.name}</p>
           <CommanderDamage 
           on21Dmg={()=>setDead(playerObject.id)}
           onAdd={
             () => {
-              dealCommanderDamage(playerObject.id,1,currentPlayerQuadrant.playerId)
-              updateLifeTotal(playerObject.lifeTotal -1,currentPlayerQuadrant.playerId)
+              dealCommanderDamage(playerObject.id,currentPlayerQuadrant.playerId,1)
+              updateLifeTotal(playerObject.id,playerObject.lifeTotal -1)
             }
           } 
-          onSubtract={() => {
-            dealCommanderDamage(playerObject.id,-1,currentPlayerQuadrant.playerId)
-            updateLifeTotal(playerObject.lifeTotal +1,currentPlayerQuadrant.playerId)
-          }}
+          onSubtract={
+            () => {
+              dealCommanderDamage(currentPlayerQuadrant.playerId,playerObject.id,-1)
+              updateLifeTotal(playerObject.id,playerObject.lifeTotal +1)
+           }
+          }
           key={currentPlayerQuadrant.playerId}
           currentDmg={currentPlayerQuadrant.damage}
           isDead={playerObject.isDead}
           />
-        </>
+        </div>
       )
     }
     return quadrants

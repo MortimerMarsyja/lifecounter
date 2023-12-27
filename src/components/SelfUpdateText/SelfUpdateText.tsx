@@ -2,7 +2,8 @@ import IconButton from "@components/IconButton";
 import Ok from "@icons/Ok";
 import Pen from "@icons/Pen";
 import { SetStateAction, useState } from "react";
-
+import selfUpdateStyles from "./selfUpdateTextStyle";
+import stylex from "@stylexjs/stylex";
 interface Props {
   initialVal: string;
   onUpdate: (text: string) => void;
@@ -20,18 +21,8 @@ const SelfUpdateText = ({ initialVal, onUpdate }: Props) => {
   const updateText = (newText: SetStateAction<string>) => {
     setText(newText);
   };
-  const handleGap = () => {
-    editMode ? 'gap-2' : 'gap-0'
-  }
   return (
-    <div className={`
-      absolute 
-      flex 
-      justify-center 
-      items-center 
-      ${handleGap()} 
-      bottom-20
-      `}>
+    <div { ... stylex.props(selfUpdateStyles.main)}>
       {editMode ? 
       <>
         <form onSubmit={handleSubmit}>
@@ -57,8 +48,10 @@ const SelfUpdateText = ({ initialVal, onUpdate }: Props) => {
         </IconButton>
         </> 
           : 
-        <>
+          <>
+        <div { ... stylex.props(selfUpdateStyles.text)}>
           {text}
+        </div>
           <IconButton 
             noBg
             onClick={()=>setEditMode(true)}
@@ -67,7 +60,9 @@ const SelfUpdateText = ({ initialVal, onUpdate }: Props) => {
               color="red"
             />
           </IconButton>
-        </>}
+        </>
+        }
+
     </div>
   );
 }

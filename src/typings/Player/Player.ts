@@ -22,6 +22,5 @@ export type iPlayer = {
   lifeTotal: number;
   background?: iBackgroundColor | iBackgroundImage;
   poisonCounters: number;
-  commanderDamage: iCommanderDamage[];
-  startingLifeTotal: number;
+  commanderDamage?: iCommanderDamage[];
 }

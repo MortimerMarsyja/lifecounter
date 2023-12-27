@@ -8,8 +8,15 @@ import {
 } from "react-router-dom";
 import Home from './views/Home/Home';
 import CenteredLayout from './layouts/CenteredLayout/CenteredLayout';
-import GameContextProvider from '@contexts/GameContext/gameContextProvider';
 import Game from '@views/Game';
+
+// if (process.env.NODE_ENV === 'development') {
+//   import('@welldone-software/why-did-you-render').then(whyDidYouRender => {
+//     whyDidYouRender.default(React, {
+//       trackAllPureComponents: true,
+//     });
+//   });
+// }
 
 const router = createBrowserRouter([
   {
@@ -24,8 +31,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <GameContextProvider>
-      <RouterProvider router={router} />
-    </GameContextProvider>
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )

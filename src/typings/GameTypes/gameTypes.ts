@@ -9,6 +9,7 @@ export interface iGame {
   dayNight: iDayNight;
   startingLifeTotal: number;
   players: Array<iPlayer>;
+  colors: Array<string>;
 }
 
 
