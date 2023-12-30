@@ -1,4 +1,6 @@
 import Button from "@components/Button"
+import lifeControlStyles from "./lifeControlStyles";
+import stylex from "@stylexjs/stylex";
 
 interface Props {
   onAdd:()=>void;
@@ -17,20 +19,43 @@ const LifeControls = ({
   startingLife,
   isDead,
 }:Props) => {
-  const handleCurrentLife = 
-  (currentLife:number | undefined,
-   startingLife:number) => {
-    return currentLife ? currentLife : startingLife
+  const handleCurrentLife = () =>{
+    if(isDead) return '💀'
+    if(currentLife === startingLife) return startingLife
+    return currentLife
   }
-  
   return (
-    <>
-      <Button onClick={onAdd}>+</Button>
-      <Button onClick={onLifeClick}>{
-        currentLife === 0  || isDead ? '☠️' : handleCurrentLife(currentLife,startingLife)
-      }</Button>
-      <Button onClick={onDecrease}>-</Button>
-    </>
+    <div
+      {... stylex.props(
+        lifeControlStyles.main
+      )}
+    >
+      <Button 
+        {... stylex.props(
+          lifeControlStyles.thirdButton
+        )}
+        fh
+        onClick={onDecrease}
+      >
+        -
+      </Button>
+      <Button 
+        {... stylex.props(
+          lifeControlStyles.secondButton
+        )}
+        onClick={onLifeClick}>
+          {handleCurrentLife()}
+      </Button>
+      <Button 
+        {... stylex.props(
+          lifeControlStyles.firstButton
+        )}
+        fh
+        onClick={onAdd}
+      >
+        +
+      </Button>
+    </div>
   )
 }
 

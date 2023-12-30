@@ -4,17 +4,20 @@ const playerSeatStyles = stylex.create({
   main: {
     display: "flex",
     flexDirection: "column",
-    width: "100%",
     height: "100%",
   },
   topSeat:{
-    transform: "rotate(180deg)",
+    rotate: "180deg",
   },
   rightSeat:{
-    transform: "rotate(270deg)",
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column-reverse',
+    transform: 'rotate(-90deg) translateX(-100%)',
+    transformOrigin: 'bottom left',
   },
   leftSeat:{
-    transform: "rotate(90deg)",
+    rotate: "90deg",
   },
   bottomSeat:{
     transform: "rotate(0deg)",

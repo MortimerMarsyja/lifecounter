@@ -1,21 +1,24 @@
 import stylex from "@stylexjs/stylex";
 
-// rotate depending on the child number first up is 0 second is 90 third is 180 fourth is 270
 const selfUpdateStyles = stylex.create({
   main: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#000000",
+    color: "#ffffff",
     height: "auto",
-    width: "auto",
+    padding: 10,
+    width: "100%",
     gap: 10,
-    top:"-12px",
+    top:"0",
     zIndex: 15,
     position: "absolute",
   },
   text:{
     display: "flex",
+    justifyContent: "space-between",
     width:"100%",
   }
 });

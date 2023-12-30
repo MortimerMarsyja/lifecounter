@@ -16,6 +16,7 @@ const ThreePlayers = ({
       if(idx === 1){
         return (
           <PlayerPlaymat
+            key={player.id}
             rowFromTo={{from: 1, to: 2}}
             colFromTo={{from: 2, to: 2}}
             rowSpan={2}
@@ -24,7 +25,6 @@ const ThreePlayers = ({
             >
             <PlayerSeat
               playerSeat={idx}
-              key={player.id}
               nPlayers={game.numberOfPlayers}
               uneven={false}
             >
@@ -38,6 +38,7 @@ const ThreePlayers = ({
       }
       return (
         <PlayerPlaymat
+          key={player.id}
           colFromTo={{from: 1, to: 1}}
           colSpan={1}
           rowSpan={1}
@@ -45,7 +46,6 @@ const ThreePlayers = ({
         >
           <PlayerSeat
             playerSeat={idx}
-            key={player.id}
             nPlayers={game.numberOfPlayers}
             uneven={false}
           >

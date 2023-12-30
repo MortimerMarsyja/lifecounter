@@ -15,6 +15,7 @@ const LifeCounter = ({
   const onUpdateName = (newName:string) => {
     updatePlayerName(id,newName)
   }
+  console.log(lifeTotal)
   const onAddLife = () => {
     updateLifeTotal(id,lifeTotal + 1)
   }
@@ -23,9 +24,10 @@ const LifeCounter = ({
   }
   if(!playerObject) return
   return (
-    <div>
+    <>
       <LifeControls
         startingLife={game.startingLifeTotal}
+        currentLife={lifeTotal}
         onAdd={onAddLife}
         isDead={playerObject.isDead}
         onDecrease={onDecreaseLife}
@@ -36,7 +38,7 @@ const LifeCounter = ({
         placeholder={name}
         playerObject={playerObject}
       />
-    </div>
+    </>
   )
 }
 

@@ -15,9 +15,14 @@ const Button = ({
 }:ButtonProps):JSX.Element => {
   const disabledClass = disabled ? "opacity-50 cursor-not-allowed" : ""
   const fullHeight = fh ? "h-full" : ""
+  const getClasses = 
+    `${className} 
+    ${disabledClass} 
+    ${fullHeight} 
+  `
   return ( 
     <button
-     className={className + " " + disabledClass + " " + fullHeight} 
+     className={getClasses} 
      onClick={onClick}
      disabled={disabled}
      >

@@ -5,7 +5,9 @@ import Eye from "@icons/Eye"
 import Icosahedron from "@icons/Icosahedron"
 import Skull from "@icons/Skull"
 import useGameStore from "@store/useGameStore"
+import stylex from "@stylexjs/stylex"
 import { iPlayer } from "src/typings/Player"
+import playerStateStyle from "./playerStatesStyle"
 
 interface Props {
   playerObject: iPlayer
@@ -42,7 +44,11 @@ const PlayerStates = ({ playerObject,className }:Props) => {
   }
 
   return(
-    <div className={className}>
+    <div 
+    {... stylex.props(
+      playerStateStyle.main
+    )}
+    >
       <IconButton 
         onClick={handleSetMonarch}>
         <Crown color={playerObject.isMonarch? '#0066cc': '#6e6e73'}/>
