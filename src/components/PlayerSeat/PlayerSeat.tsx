@@ -1,6 +1,5 @@
 import stylex from "@stylexjs/stylex";
 import playerSeatStyles from "./playerSeatStyles";
-import { useState } from "react";
 import Measure from "react-measure";
 
 interface PlayerSeatProps {
@@ -10,6 +9,7 @@ interface PlayerSeatProps {
   nPlayers: number;
   playmatHeight?: number;
   width?: number;
+  height?: number;
   ninetyRotation?: boolean;
 }
 
@@ -19,10 +19,9 @@ const PlayerSeat = ({
   nPlayers,
   children,
   playmatHeight,
-  ninetyRotation,
+  width,
+  height,
 }:PlayerSeatProps) => {
-  const [bounds,setBounds] = useState({width: 0, height: 0});
-  // console.log(bounds)
   const gridRows = Math.floor(playmatHeight ?? 0 / nPlayers);
   const calculateSeatOrientation = (playerSeat:number, uneven:boolean) => {
     if (uneven) {
@@ -42,13 +41,11 @@ const PlayerSeat = ({
     }
     return 'bottomSeat'
   }
-
+  const w = width ? `${width}px` : 'auto'
+  const h = height ? `${height}px` : 'auto'
   return (
     <Measure
       bounds
-      onResize={(contentRect) => {
-        setBounds(contentRect.bounds || { width: 0, height: 0 });
-      }}
     >
     {({ measureRef }: { measureRef: React.Ref<Element> }) => (
       <div 
@@ -58,6 +55,8 @@ const PlayerSeat = ({
         playerSeatStyles[calculateSeatOrientation(playerSeat, uneven) as keyof typeof playerSeatStyles]
       )}
       style={{ 
+        width: `${w}`,
+        height: `${h}`,
         gridRowEnd: `span ${gridRows}`
       }}>
         {children}

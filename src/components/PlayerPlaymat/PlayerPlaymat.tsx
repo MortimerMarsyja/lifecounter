@@ -14,9 +14,11 @@ interface Props {
   background?: string;
   children?: React.ReactNode;
   style?: CSSProperties;
+  withRefData?:(refData:React.RefObject<HTMLDivElement>)=> void;
 }
 
 const PlayerPlaymat = ({
+  withRefData,
   rowFromTo,
   colFromTo,
   rowSpan,
@@ -39,8 +41,12 @@ const PlayerPlaymat = ({
   useEffect(() => {
     if (playmatRef.current) {
       setPlaymatHeight(playmatRef.current.offsetHeight);
+      if(withRefData) withRefData(playmatRef)
     }
-  }, []);
+  }, [
+    playmatRef,
+    withRefData,
+  ]);
   return (
     <div 
       ref={playmatRef}

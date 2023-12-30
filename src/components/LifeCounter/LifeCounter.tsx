@@ -15,7 +15,6 @@ const LifeCounter = ({
   const onUpdateName = (newName:string) => {
     updatePlayerName(id,newName)
   }
-  console.log(lifeTotal)
   const onAddLife = () => {
     updateLifeTotal(id,lifeTotal + 1)
   }

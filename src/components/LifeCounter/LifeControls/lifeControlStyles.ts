@@ -7,7 +7,7 @@ const lifeControlStyles = stylex.create({
     height: "100%",
     width: "100%",
     backgroundColor: "rgba(0,0,0,0.5)",
-    zIndex: 20,
+    zIndex: 15,
   },
   firstButton: {
     flex: 2,
