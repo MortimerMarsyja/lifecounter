@@ -6,7 +6,6 @@ const selfUpdateStyles = stylex.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#000000",
     color: "#ffffff",
     height: "auto",
     padding: 10,

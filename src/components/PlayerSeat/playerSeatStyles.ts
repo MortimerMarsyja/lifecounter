@@ -17,7 +17,11 @@ const playerSeatStyles = stylex.create({
     transformOrigin: 'left top',
   },
   leftSeat:{
-    rotate: "90deg",
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    transformOrigin: 'left top',
+    transform: 'rotate(90deg) translateY(-100%)',
   },
   bottomSeat:{
     transform: "rotate(0deg)",

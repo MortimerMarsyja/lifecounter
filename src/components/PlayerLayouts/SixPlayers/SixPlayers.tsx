@@ -1,52 +1,50 @@
-import PlayerPlaymat from "@components/PlayerPlaymat/PlayerPlaymat";
-import PlayerSeat from "@components/PlayerSeat";
 import { iGame } from "src/typings/GameTypes";
-import OddLayout from "./OddLayout";
+import PlayerSeat from "@components/PlayerSeat";
 import LifeCounter from "@components/LifeCounter";
-import Layout from "src/typings/Layout/Layout";
+import PlayerPlaymat from "@components/PlayerPlaymat/PlayerPlaymat";
+import { useState } from "react";
 
 interface Props {
-  layout: Layout;
   game: iGame;
 }
 
-const SixPlayers = ({ layout, game }: Props) => {
-  const calculateRows = layout === 'even' ?
-    'grid-rows-3' : 'grid-rows-4'
-  if (layout === 'even') {
-    return (
-      game.players.map((player, idx) => (
-        <OddLayout
-          idx={idx}
-          key={player.id}
-          background={player.background}
-        >
-          <PlayerSeat
-            playerSeat={idx}
-            key={player.id}
-            nPlayers={game.numberOfPlayers}
-            uneven={true}
-          >
-            <LifeCounter
-              key={player.id}
-              playerObject={player}
-            />
-          </PlayerSeat>
-        </OddLayout>
-      ))
-    )
-  }
+
+type iDimension = {
+  w: number;
+  h: number;
+}
+
+type Dimensions = iDimension | undefined;
+
+const SixPlayers = ({
+  game,
+}: Props) => {
+  const [commonPlayerDimensions, setCommonPlayerDimensions] = useState<Dimensions>(undefined)
   return (
-    <div className={`grid ${calculateRows} grid-cols-2	`}>
-      {game.players.map((player, idx) => (
+    <div className={`grid grid-rows-3 grid-cols-2 w-full h-full`}>
+    {game.players.map((player, idx) => {
+      return (
         <PlayerPlaymat
-          rowSpan={1}
+          key={player.id}
           colSpan={1}
+          rowSpan={1}
+          withRefData={
+            (refData) => {
+              if(refData.current){
+                setCommonPlayerDimensions({
+                  w: refData.current.offsetWidth,
+                  h: refData.current.offsetHeight
+                })
+              }
+            }
+          }
           background={player.background}
         >
-          <PlayerSeat
+        { commonPlayerDimensions ?
+        <PlayerSeat
             playerSeat={idx}
-            key={player.id}
+            width={commonPlayerDimensions?.h}
+            height={commonPlayerDimensions?.w}
             nPlayers={game.numberOfPlayers}
             uneven={false}
           >
@@ -54,10 +52,11 @@ const SixPlayers = ({ layout, game }: Props) => {
               key={player.id}
               playerObject={player}
             />
-          </PlayerSeat>
+          </PlayerSeat> : null}
         </PlayerPlaymat>
-      ))}
-    </div>
+      )
+    })}
+  </div>
   )
 }
 

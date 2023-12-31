@@ -44,7 +44,8 @@ const PlayerStates = ({ playerObject,className }:Props) => {
   }
 
   return(
-    <div 
+    <div
+    className={`${className}`}
     {... stylex.props(
       playerStateStyle.main
     )}

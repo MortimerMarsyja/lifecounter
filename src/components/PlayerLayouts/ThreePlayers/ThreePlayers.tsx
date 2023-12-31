@@ -32,7 +32,7 @@ const ThreePlayers = ({
             colFromTo={{from: 2, to: 2}}
             rowSpan={2}
             colSpan={1}
-            background={'red'}
+            background={player.background}
             withRefData={(refData) => {
               if(refData.current){
                 setSecondPlayerDimensions({
