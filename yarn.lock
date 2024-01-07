@@ -2265,6 +2265,11 @@ scheduler@^0.23.0:
   dependencies:
     loose-envify "^1.1.0"
 
+scryfall-sdk@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/scryfall-sdk/-/scryfall-sdk-4.2.2.tgz#48ff8438fec0c35cab02153b8d5099fd6d067c27"
+  integrity sha512-M9V7YpkX+oXbXz69HdRzxU6jyK9QDnuOouY8zL2z/+DD9g6VJwZ3487ANf4gQOhsL9T4/74jvQWrnv2L6v4Y/A==
+
 semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"

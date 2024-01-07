@@ -2,7 +2,7 @@ import { iPlayer } from "../Player";
 
 
 
-export type iDayNight = false | 'day' | 'night';
+export type iDayNight = 'neutral' | 'day' | 'night';
 
 export interface iGame {
   numberOfPlayers: number;

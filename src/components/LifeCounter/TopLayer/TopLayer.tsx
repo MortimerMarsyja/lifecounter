@@ -18,6 +18,7 @@ const TopLayer = ({
   return (
     <div className="top-layer">
       <SelfUpdateText
+        playerObject={playerObject}
         initialVal={initialUserName}
         onUpdate={onUpdateName}
       />

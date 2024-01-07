@@ -12,11 +12,10 @@ const vibrantColors = [
 ]
 
 const Game = ():JSX.Element => {
-  const {game} = useGameStore()
-  const {setPlayerBg} = useGameStore()
+  const {game,setPlayerColor} = useGameStore()
   useEffect(() => {
     game.players.forEach((player, idx) => {
-      setPlayerBg(player.id,vibrantColors[idx])
+      setPlayerColor(player.id,vibrantColors[idx])
     }
     )
   // eslint-disable-next-line react-hooks/exhaustive-deps

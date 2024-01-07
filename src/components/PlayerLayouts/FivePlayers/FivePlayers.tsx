@@ -3,6 +3,7 @@ import PlayerSeat from "@components/PlayerSeat";
 import LifeCounter from "@components/LifeCounter";
 import PlayerPlaymat from "@components/PlayerPlaymat/PlayerPlaymat";
 import { useState } from "react";
+import { getBgColor } from "@utils/getBgColor";
 
 interface Props {
   game: iGame;
@@ -19,6 +20,7 @@ type Dimensions = iDimension | undefined;
 const FivePlayers = ({
   game,
 }: Props) => {
+  const bg = getBgColor(game.dayNight)
   const [fifthPlayerDimensions, setFifthPlayerDimensions] = useState<Dimensions>(undefined)
   const [commonPlayerDimensions, setCommonPlayerDimensions] = useState<Dimensions>(undefined)
   return (
@@ -31,7 +33,7 @@ const FivePlayers = ({
             rowSpan={1}
             colSpan={2}
             colFromTo={{from: 1, to: 2}}
-            background={player.background}
+            background={bg}
             withRefData={(refData) => {
               if(refData.current){
                 setFifthPlayerDimensions({
@@ -74,7 +76,7 @@ const FivePlayers = ({
               }
             }
           }
-          background={player.background}
+          background={bg}
         >
         { commonPlayerDimensions ?
         <PlayerSeat

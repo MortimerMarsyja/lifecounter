@@ -3,6 +3,9 @@ import PlayerSeat from "@components/PlayerSeat";
 import LifeCounter from "@components/LifeCounter";
 import PlayerPlaymat from "@components/PlayerPlaymat/PlayerPlaymat";
 import { useState } from "react";
+import useGameStore from "@store/useGameStore";
+import { getBgColor } from "@utils/getBgColor";
+
 
 interface Props {
   game: iGame;
@@ -20,8 +23,9 @@ const SixPlayers = ({
   game,
 }: Props) => {
   const [commonPlayerDimensions, setCommonPlayerDimensions] = useState<Dimensions>(undefined)
+  const bg = getBgColor(game.dayNight)
   return (
-    <div className={`grid grid-rows-3 grid-cols-2 w-full h-full`}>
+    <div className={`grid grid-rows-3 grid-cols-2 w-full h-full gap-2`}>
     {game.players.map((player, idx) => {
       return (
         <PlayerPlaymat
@@ -38,7 +42,7 @@ const SixPlayers = ({
               }
             }
           }
-          background={player.background}
+          background={bg}
         >
         { commonPlayerDimensions ?
         <PlayerSeat

@@ -3,6 +3,7 @@ import PlayerSeat from "@components/PlayerSeat";
 import LifeCounter from "@components/LifeCounter";
 import PlayerPlaymat from "@components/PlayerPlaymat/PlayerPlaymat";
 import { useState } from "react";
+import { getBgColor } from "@utils/getBgColor";
 
 interface Props {
   game: iGame;
@@ -20,6 +21,7 @@ type Dimensions = iDimension | undefined;
 const TwoPlayers = ({
   game,
 }: Props) => {
+  const bg = getBgColor(game.dayNight)
   const [playerDimensions, setPlayerDimensions] = useState<Dimensions>(undefined)
   return (
     <div className={`
@@ -44,7 +46,7 @@ const TwoPlayers = ({
               }
             }
           }
-          background={player.background}
+          background={bg}
         >
           { playerDimensions ? (
             <PlayerSeat

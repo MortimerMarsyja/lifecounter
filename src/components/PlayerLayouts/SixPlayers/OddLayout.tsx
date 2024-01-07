@@ -3,6 +3,7 @@ import PlayerSeat from "@components/PlayerSeat";
 import LifeCounter from "@components/LifeCounter";
 import PlayerPlaymat from "@components/PlayerPlaymat/PlayerPlaymat";
 import { useState } from "react";
+import { getBgColor } from "@utils/getBgColor";
 
 interface Props {
   game: iGame;
@@ -19,6 +20,7 @@ type Dimensions = iDimension | undefined;
 const OddSixLayout = ({
   game,
 }: Props) => {
+  const bgColor = getBgColor(game.dayNight)
   const [firstLastDimensions, setFirstLastDimensions] = useState<Dimensions>(undefined)
   const [commonPlayerDimensions, setCommonPlayerDimensions] = useState<Dimensions>(undefined)
   return (
@@ -31,7 +33,7 @@ const OddSixLayout = ({
             rowSpan={1}
             colSpan={2}
             colFromTo={{from: 1, to: 2}}
-            background={player.background}
+            background={bgColor}
             withRefData={(refData) => {
               if(refData.current){
                 setFirstLastDimensions({
@@ -74,7 +76,7 @@ const OddSixLayout = ({
               }
             }
           }
-          background={player.background}
+          background={bgColor}
         >
         { commonPlayerDimensions ?
         <PlayerSeat

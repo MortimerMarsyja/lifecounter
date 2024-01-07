@@ -2,7 +2,8 @@ import { iGame } from "src/typings/GameTypes";
 import PlayerSeat from "@components/PlayerSeat";
 import LifeCounter from "@components/LifeCounter";
 import PlayerPlaymat from "@components/PlayerPlaymat/PlayerPlaymat";
-import { useState } from "react";
+import { RefObject, useCallback, useState } from "react";
+import { getBgColor } from "@utils/getBgColor";
 
 interface Props {
   game: iGame;
@@ -20,9 +21,28 @@ const ThreePlayers = ({
   game,
 }: Props) => {
   const [secondPlayerDimensions, setSecondPlayerDimensions] = useState<Dimensions>(undefined)
-  console.log(secondPlayerDimensions)
+  const [commonDimensions, setCommonDimensions] = useState<Dimensions>(undefined)
+  const bgColor = getBgColor(game.dayNight)
+  
+  const handleSecondPlayerRefData = useCallback((refData: RefObject<HTMLDivElement>) => {
+    if(refData.current){
+      setSecondPlayerDimensions({
+        w: refData.current.offsetWidth,
+        h: refData.current.offsetHeight
+      })
+    }
+  }, []);
+
+  const handleCommonRefData = useCallback((refData: RefObject<HTMLDivElement>) => {
+    if(refData.current){
+      setCommonDimensions({
+        w: refData.current.offsetWidth,
+        h: refData.current.offsetHeight
+      })
+    }
+  }, []);
   return (
-    <div className={`grid grid-rows-2 grid-cols-2 w-full h-full`}>
+    <div className={`grid grid-rows-2 gap-2 grid-cols-2 w-full h-full`}>
     {game.players.map((player, idx) => {
       if(idx === 1){
         return (
@@ -32,15 +52,8 @@ const ThreePlayers = ({
             colFromTo={{from: 2, to: 2}}
             rowSpan={2}
             colSpan={1}
-            background={player.background}
-            withRefData={(refData) => {
-              if(refData.current){
-                setSecondPlayerDimensions({
-                  w: refData.current.offsetWidth,
-                  h: refData.current.offsetHeight
-                })
-              }
-            }}
+            background={bgColor}
+            withRefData={handleSecondPlayerRefData}
             >
             {secondPlayerDimensions && 
             <PlayerSeat
@@ -61,12 +74,15 @@ const ThreePlayers = ({
       return (
         <PlayerPlaymat
           key={player.id}
-          colFromTo={{from: 1, to: 1}}
           colSpan={1}
           rowSpan={1}
-          background={player.background}
-        >
+          background={bgColor}
+          withRefData={handleCommonRefData}
+          >
+          { commonDimensions && 
           <PlayerSeat
+            width={commonDimensions.h}
+            height={commonDimensions.w}
             playerSeat={idx}
             nPlayers={game.numberOfPlayers}
             uneven={false}
@@ -76,6 +92,7 @@ const ThreePlayers = ({
               playerObject={player}
             />
           </PlayerSeat>
+          }
         </PlayerPlaymat>
       )
     })}

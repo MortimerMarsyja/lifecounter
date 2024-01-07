@@ -32,7 +32,6 @@ const MenuCounter = ({playerObject,handleClose}:MenuCounterProps) => {
       absolute 
       w-11/12 
       h-5/6 
-      bg-[#fff] 
       z-20 
       top-0 
       left-0 

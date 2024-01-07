@@ -1,4 +1,5 @@
 import FivePlayers from "@components/PlayerLayouts/FivePlayers";
+import OddFiveLayout from "@components/PlayerLayouts/FivePlayers/OddFiveLayout";
 import FourPlayers from "@components/PlayerLayouts/FourPlayers";
 import SixPlayers from "@components/PlayerLayouts/SixPlayers/SixPlayers";
 import ThreePlayers from "@components/PlayerLayouts/ThreePlayers";
@@ -21,8 +22,7 @@ const PlayersLayout = ({
     />
   }
   if (game.players.length === 5) {
-    return <FivePlayers
-      layout={isEven ? 'even' : 'odd'}
+    return <OddFiveLayout
       game={game}
     />
   }

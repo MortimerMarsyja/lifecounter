@@ -4,9 +4,9 @@ const calculateSeatOrientation = (nPlayers:number,playerSeat:number,uneven:boole
     if (playerSeat === 1) return 'bottomSeat'
   }
   if (nPlayers === 3) {
-    if (playerSeat === 0) return 'topSeat'
+    if (playerSeat === 0) return 'leftSeat'
     if (playerSeat === 1) return 'rightSeat'
-    if (playerSeat === 2) return 'bottomSeat'
+    if (playerSeat === 2) return 'leftSeat'
   }
   if (nPlayers === 4) {
     if (playerSeat === 0) return 'topSeat'

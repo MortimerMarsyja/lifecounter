@@ -6,7 +6,6 @@ const Home = () => {
   const navigate = useNavigate();
   const {game, populatePlayers,setStartingLifeTotal} = useGameStore()
   const [isCommanderGame, setIsCommanderGame] = React.useState(true);
-
   const navigateToGame = () => {
     navigate("/game");
   };
@@ -22,10 +21,10 @@ const Home = () => {
 
   return (
     <>
-      <div className="card">
+      <div className="p-4 flex items-center bg-[#cecece] rounded-full">
         <form className="flex gap-3" onSubmit={handleSubmit}>
           <div className="card-body">
-            <div className="mb-3 flex gap-3">
+            <div className="flex gap-3">
               <label htmlFor="numberOfPlayers" className="form-label">
                 Number of players
               </label>

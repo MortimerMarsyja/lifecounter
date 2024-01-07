@@ -21,6 +21,7 @@ export type iPlayer = {
   id:UUID;
   lifeTotal: number;
   background?: iBackgroundColor | iBackgroundImage;
+  color: string;
   poisonCounters: number;
   commanderDamage?: iCommanderDamage[];
 }

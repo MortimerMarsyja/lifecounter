@@ -7,10 +7,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const gameInitialState = {
   numberOfPlayers: 4,
-  dayNight: false,
+  dayNight: 'neutral',
   players: [],
   startingLifeTotal: 40,
-  colors: []
+  backgrounds: [],
+  colors:[]
 } as iGame;
 
 interface GameState {
@@ -25,12 +26,11 @@ interface GameState {
   setDead: (id: UUID, isDead?: boolean) => void;
   setInitiative: (id: UUID, hasInitiative?: boolean) => void;
   setNemesis: (id: UUID, isNemesis?: boolean) => void;
-  updateDayNight: (dayNight: iDayNight) => void;
   setPlayerBg: (id: UUID,background:string) => void;
   populatePlayers: (nPlayers: number, commander?: boolean, totalLife?: number) => void;
   setStartingLifeTotal: (startingLifeTotal: number) => void;
+  setPlayerColor: (id: UUID, color: string) => void;
 }
-
 
 
 const handleGenerateUUIDs = (playersAmount: number) => {
@@ -40,7 +40,6 @@ const handleGenerateUUIDs = (playersAmount: number) => {
   }
   return playerIds;
 }
-
 
 const handleGenerateCommanderDamage = (
   playersAmount: number,
@@ -96,14 +95,26 @@ function handleDealCommanderDamage(players: iPlayer[], id: UUID, targetId: UUID,
   });
 }
 
+function handleChangePlayerColor(players: iPlayer[], id: UUID, color: string): iPlayer[] {
+  return players.map(player => {
+    if (player.id === id) {
+      return { ...player, color };
+    }
+    return player;
+  });
+}
+
 export const useGameStore = create<GameState>()(
   persist(
     (set) => ({
       game: gameInitialState,
-      setDayNight: (dayNight) => set(
+      setPlayerColor: (id, color) => set(
         (state) => ({
           ...state,
-          game: { ...state.game, dayNight },
+          game: {
+            ...state.game,
+            players: handleChangePlayerColor(state.game.players, id, color),
+          },
         })),
       setAscended: (id) => set(
         (state) => ({
@@ -224,11 +235,11 @@ export const useGameStore = create<GameState>()(
             }),
           },
         })),
-      updateDayNight: (dayNight) => set(
-        (state) => ({
-          ...state,
-          game: { ...state.game, dayNight },
-        })),
+        setDayNight: (dayNight: iDayNight) => set(
+          (state) => ({
+            ...state,
+            game: { ...state.game, dayNight },
+          })),
         setPlayerBg: (id:UUID,background:string) => set(
         (state) => ({
           ...state,

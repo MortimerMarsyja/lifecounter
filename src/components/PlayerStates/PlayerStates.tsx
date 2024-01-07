@@ -13,7 +13,10 @@ interface Props {
   playerObject: iPlayer
   className?: string
 }
-
+const colors = {
+  active: '#fff',
+  inactive: '#a2a1a1'
+}
 const PlayerStates = ({ playerObject,className }:Props) => {
   const {
     setDead,
@@ -52,25 +55,25 @@ const PlayerStates = ({ playerObject,className }:Props) => {
     >
       <IconButton 
         onClick={handleSetMonarch}>
-        <Crown color={playerObject.isMonarch? '#0066cc': '#6e6e73'}/>
+        <Crown color={playerObject.isMonarch? colors.active:colors.inactive}/>
       </IconButton>
       <IconButton 
         onClick={handleSetAscended}
       >
-        <Ascend color={playerObject.isAscended? '#0066cc': '#6e6e73'}/>
+        <Ascend color={playerObject.isAscended? colors.active:colors.inactive}/>
       </IconButton>
       <IconButton 
         onClick={handleSetInitiative}
       >
-        <Icosahedron color={playerObject.hasInitiative? '#0066cc': '#6e6e73'}/>
+        <Icosahedron color={playerObject.hasInitiative? colors.active:colors.inactive}/>
       </IconButton>
       <IconButton 
         onClick={handleSetDead}
       >
-        <Skull color={playerObject.isDead? '#0066cc': '#6e6e73'}/>
+        <Skull color={playerObject.isDead? colors.active:colors.inactive}/>
       </IconButton>
       <IconButton onClick={handleSetNemesis}>
-        <Eye color={playerObject?.isNemesis ? '#0066cc' : '#6e6e73'} />
+        <Eye color={playerObject?.isNemesis ? colors.active:colors.inactive} />
       </IconButton>
     </div>
   )
