@@ -12,7 +12,7 @@ const CenteredLayout = ({ children }:CenteredLayoutProps):JSX.Element => {
     return '#000000'
   }
   return(
-  <div className={`flex w-full items-center justify-center h-full bg-[${bg()}]`}>
+  <div className={`flex flex-wrap w-full items-center justify-center h-full bg-[${bg()}]`}>
     {children}
   </div>
 )};

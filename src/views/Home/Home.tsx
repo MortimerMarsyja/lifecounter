@@ -21,10 +21,18 @@ const Home = () => {
 
   return (
     <>
-      <div className="p-4 flex items-center bg-[#cecece] rounded-full">
-        <form className="flex gap-3" onSubmit={handleSubmit}>
+      <div className="
+      p-4 
+      flex 
+      items-center 
+      flex-wrap 
+      bg-[#cecece] 
+      rounded-full 
+      sm:rounded-md 
+      ">
+        <form className="flex gap-3 flex-wrap" onSubmit={handleSubmit}>
           <div className="card-body">
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap">
               <label htmlFor="numberOfPlayers" className="form-label">
                 Number of players
               </label>
