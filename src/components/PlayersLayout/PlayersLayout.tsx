@@ -11,34 +11,20 @@ interface Props {
   isEven?: boolean;
 }
 
-const PlayersLayout = ({
-  game,
-  isEven = true,
-}: Props) => {
+const PlayersLayout = ({ game, isEven = true }: Props) => {
   if (game.players.length === 6) {
-    return <SixPlayers
-      layout={isEven ? 'even' : 'odd'}
-      game={game}
-    />
+    return <SixPlayers game={game} />;
   }
   if (game.players.length === 5) {
-    return <OddFiveLayout
-      game={game}
-    />
+    isEven ? <FivePlayers game={game} /> : <OddFiveLayout game={game} />;
   }
   if (game.players.length === 4) {
-    return <FourPlayers
-      game={game}
-    />
+    return <FourPlayers game={game} />;
   }
-  if(game.players.length === 3) {
-    return <ThreePlayers
-      game={game}
-    />
+  if (game.players.length === 3) {
+    return <ThreePlayers game={game} />;
   }
-  return <TwoPlayers
-    game={game}
-  />
-}
+  return <TwoPlayers game={game} />;
+};
 
-export default PlayersLayout
+export default PlayersLayout;

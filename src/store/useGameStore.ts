@@ -2,16 +2,16 @@ import { UUID } from "crypto";
 import { iDayNight, iGame } from "src/typings/GameTypes";
 import { IntRange0To21, iPlayer } from "src/typings/Player";
 import { create } from "zustand";
-import { persist } from 'zustand/middleware'
-import { v4 as uuidv4 } from 'uuid';
+import { persist } from "zustand/middleware";
+import { v4 as uuidv4 } from "uuid";
 
 export const gameInitialState = {
   numberOfPlayers: 4,
-  dayNight: 'neutral',
+  dayNight: "neutral",
   players: [],
   startingLifeTotal: 40,
   backgrounds: [],
-  colors:[]
+  colors: [],
 } as iGame;
 
 interface GameState {
@@ -26,12 +26,15 @@ interface GameState {
   setDead: (id: UUID, isDead?: boolean) => void;
   setInitiative: (id: UUID, hasInitiative?: boolean) => void;
   setNemesis: (id: UUID, isNemesis?: boolean) => void;
-  setPlayerBg: (id: UUID,background:string) => void;
-  populatePlayers: (nPlayers: number, commander?: boolean, totalLife?: number) => void;
+  setPlayerBg: (id: UUID, background: string) => void;
+  populatePlayers: (
+    nPlayers: number,
+    commander?: boolean,
+    totalLife?: number
+  ) => void;
   setStartingLifeTotal: (startingLifeTotal: number) => void;
   setPlayerColor: (id: UUID, color: string) => void;
 }
-
 
 const handleGenerateUUIDs = (playersAmount: number) => {
   const playerIds = [];
@@ -39,7 +42,7 @@ const handleGenerateUUIDs = (playersAmount: number) => {
     playerIds.push(uuidv4());
   }
   return playerIds;
-}
+};
 
 const handleGenerateCommanderDamage = (
   playersAmount: number,
@@ -54,9 +57,13 @@ const handleGenerateCommanderDamage = (
     });
   }
   return commanderDamage;
-}
+};
 
-const handlePopulatePlayers = (playersAmount: number, commander: boolean, totalLife: number) => {
+const handlePopulatePlayers = (
+  playersAmount: number,
+  commander: boolean,
+  totalLife: number
+) => {
   const playerIds = handleGenerateUUIDs(playersAmount);
   const players: iPlayer[] = [];
   if (playersAmount < 2) return [];
@@ -71,32 +78,45 @@ const handlePopulatePlayers = (playersAmount: number, commander: boolean, totalL
       hasInitiative: false,
       isAscended: false,
       isNemesis: false,
-      background:'',
-      ...(commander && { commanderDamage: handleGenerateCommanderDamage(playersAmount, playerIds as UUID[]) }),
+      color: "",
+      ...(commander && {
+        commanderDamage: handleGenerateCommanderDamage(
+          playersAmount,
+          playerIds as UUID[]
+        ),
+      }),
     });
   }
   return players satisfies iPlayer[];
 };
 
-function handleDealCommanderDamage(players: iPlayer[], id: UUID, targetId: UUID, damage: number): iPlayer[] {
-  return players.map(player => {
+function handleDealCommanderDamage(
+  players: iPlayer[],
+  id: UUID,
+  targetId: UUID,
+  damage: number
+): iPlayer[] {
+  return players.map((player) => {
     if (player.id === id) {
       if (!player.commanderDamage) return player;
-      const commanderDamage = player.commanderDamage.map(dmg => {
+      const commanderDamage = player.commanderDamage.map((dmg) => {
         if (dmg.playerId === targetId) {
-          return { ...dmg, damage: damage + dmg.damage as IntRange0To21 };
+          return { ...dmg, damage: (damage + dmg.damage) as IntRange0To21 };
         }
         return dmg;
       });
-
       return { ...player, commanderDamage };
     }
     return player;
   });
 }
 
-function handleChangePlayerColor(players: iPlayer[], id: UUID, color: string): iPlayer[] {
-  return players.map(player => {
+function handleChangePlayerColor(
+  players: iPlayer[],
+  id: UUID,
+  color: string
+): iPlayer[] {
+  return players.map((player) => {
     if (player.id === id) {
       return { ...player, color };
     }
@@ -104,20 +124,26 @@ function handleChangePlayerColor(players: iPlayer[], id: UUID, color: string): i
   });
 }
 
+const handleSetDayNight = (prevDayNight: iDayNight, dayNight: iDayNight) => {
+  if (prevDayNight === "day" && dayNight === "night") return "night";
+  if (prevDayNight === "night" && dayNight === "day") return "day";
+  return "neutral";
+};
+
 export const useGameStore = create<GameState>()(
   persist(
     (set) => ({
       game: gameInitialState,
-      setPlayerColor: (id, color) => set(
-        (state) => ({
+      setPlayerColor: (id, color) =>
+        set((state) => ({
           ...state,
           game: {
             ...state.game,
             players: handleChangePlayerColor(state.game.players, id, color),
           },
         })),
-      setAscended: (id) => set(
-        (state) => ({
+      setAscended: (id) =>
+        set((state) => ({
           ...state,
           game: {
             ...state.game,
@@ -126,11 +152,11 @@ export const useGameStore = create<GameState>()(
                 return { ...player, isAscended: !player.isAscended };
               }
               return player;
-            })
+            }),
           },
         })),
-      setMonarch: (id, isMonarch) => set(
-        (state) => ({
+      setMonarch: (id, isMonarch) =>
+        set((state) => ({
           ...state,
           game: {
             ...state.game,
@@ -139,20 +165,26 @@ export const useGameStore = create<GameState>()(
                 return { ...player, isMonarch: false };
               }
               if (player.id === id) {
-                return { ...player, isMonarch: isMonarch ? isMonarch : !player.isMonarch };
+                return {
+                  ...player,
+                  isMonarch: isMonarch ? isMonarch : !player.isMonarch,
+                };
               }
               return player;
             }),
           },
         })),
-      addPoison: (id, poisonCounters) => set(
-        (state) => ({
+      addPoison: (id, poisonCounters) =>
+        set((state) => ({
           ...state,
           game: {
             ...state.game,
             players: state.game.players.map((player: iPlayer) => {
               if (player.id === id) {
-                return { ...player, poisonCounters: player.poisonCounters + poisonCounters };
+                return {
+                  ...player,
+                  poisonCounters: player.poisonCounters + poisonCounters,
+                };
               }
               return player;
             }),
@@ -172,8 +204,8 @@ export const useGameStore = create<GameState>()(
           },
         }));
       },
-      updatePlayerName: (id, name) => set(
-        (state) => ({
+      updatePlayerName: (id, name) =>
+        set((state) => ({
           ...state,
           game: {
             ...state.game,
@@ -199,8 +231,8 @@ export const useGameStore = create<GameState>()(
           },
         }));
       },
-      setInitiative: (id, hasInitiative) => set(
-        (state) => ({
+      setInitiative: (id, hasInitiative) =>
+        set((state) => ({
           ...state,
           game: {
             ...state.game,
@@ -209,14 +241,19 @@ export const useGameStore = create<GameState>()(
                 return { ...player, hasInitiative: false };
               }
               if (player.id === id) {
-                return { ...player, hasInitiative: hasInitiative ? hasInitiative : !player.hasInitiative };
+                return {
+                  ...player,
+                  hasInitiative: hasInitiative
+                    ? hasInitiative
+                    : !player.hasInitiative,
+                };
               }
               return player;
             }),
           },
         })),
-      setNemesis: (id, isNemesis) => set(
-        (state) => ({
+      setNemesis: (id, isNemesis) =>
+        set((state) => ({
           ...state,
           game: {
             ...state.game,
@@ -226,22 +263,24 @@ export const useGameStore = create<GameState>()(
               }
               if (player.id === id) {
                 return {
-                  ...player, isNemesis: isNemesis ?
-                    isNemesis :
-                    !player.isNemesis
+                  ...player,
+                  isNemesis: isNemesis ? isNemesis : !player.isNemesis,
                 };
               }
               return player;
             }),
           },
         })),
-        setDayNight: (dayNight: iDayNight) => set(
-          (state) => ({
-            ...state,
-            game: { ...state.game, dayNight },
-          })),
-        setPlayerBg: (id:UUID,background:string) => set(
-        (state) => ({
+      setDayNight: (dayNight: iDayNight) =>
+        set((state) => ({
+          ...state,
+          game: {
+            ...state.game,
+            dayNight: handleSetDayNight(state.game.dayNight, dayNight),
+          },
+        })),
+      setPlayerBg: (id: UUID, background: string) =>
+        set((state) => ({
           ...state,
           game: {
             ...state.game,
@@ -251,10 +290,10 @@ export const useGameStore = create<GameState>()(
               }
               return player;
             }),
-           },
+          },
         })),
-      populatePlayers: (nPlayers, commander = true, totalLife = 40) => set(
-        (state) => ({
+      populatePlayers: (nPlayers, commander = true, totalLife = 40) =>
+        set((state) => ({
           ...state,
           game: {
             ...state.game,
@@ -269,21 +308,26 @@ export const useGameStore = create<GameState>()(
             ...state,
             game: {
               ...state.game,
-              players: handleDealCommanderDamage(state.game.players, id, targetId, damage),
+              players: handleDealCommanderDamage(
+                state.game.players,
+                id,
+                targetId,
+                damage
+              ),
             },
-          }
+          };
         });
       },
-      setStartingLifeTotal: (startingLifeTotal) => set(
-        (state) => ({
+      setStartingLifeTotal: (startingLifeTotal) =>
+        set((state) => ({
           ...state,
           game: { ...state.game, startingLifeTotal },
         })),
     }),
     {
-      name: 'game-storage',
-    },
-  ),
+      name: "game-storage",
+    }
+  )
 );
 
 export default useGameStore;
