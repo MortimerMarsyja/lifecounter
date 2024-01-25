@@ -7,7 +7,6 @@ interface CenteredLayoutProps {
 const CenteredLayout = ({ children }: CenteredLayoutProps): JSX.Element => {
   const { game } = useGameStore();
   const bg = () => {
-    console.log(game.dayNight, "tell me the truth");
     if (game.dayNight === "day") return "#ffffff";
     return "#000000";
   };

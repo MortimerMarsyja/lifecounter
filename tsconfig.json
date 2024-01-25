@@ -22,7 +22,11 @@
       "@contexts/*": ["src/contexts/*"],
       "@reducers/*": ["src/reducers/*"],
       "@store/*": ["src/store/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@services/*": ["src/services/*"],
+      "@styles/*": ["src/styles/*"],
+      "@lib/*": ["src/lib/*"],
+      "@utilities/*": ["src/utilities/*"],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",

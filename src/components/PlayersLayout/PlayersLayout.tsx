@@ -4,7 +4,7 @@ import FourPlayers from "@components/PlayerLayouts/FourPlayers";
 import SixPlayers from "@components/PlayerLayouts/SixPlayers/SixPlayers";
 import ThreePlayers from "@components/PlayerLayouts/ThreePlayers";
 import TwoPlayers from "@components/PlayerLayouts/TwoPlayers";
-import { iGame } from "src/typings/GameTypes";
+import { iGame } from "@lib/definitions";
 
 interface Props {
   game: iGame;

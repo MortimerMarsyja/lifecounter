@@ -1,6 +1,7 @@
 import CommanderDamage from "@components/CommanderDamage";
+import openModalService from "@services/open-modal-service";
 import useGameStore from "@store/useGameStore";
-import usePlayerModalStore from "@store/usePlayerModalStore";
+
 import { UUID } from "crypto";
 
 interface PlayerModalProps {
@@ -8,18 +9,40 @@ interface PlayerModalProps {
 }
 
 const PlayerModal = ({ playerId }: PlayerModalProps) => {
-  const { game, setDead, dealCommanderDamage } = useGameStore();
-  const { setModalData } = usePlayerModalStore();
+  const { game, setDead, dealCommanderDamage, updateLifeTotal } =
+    useGameStore();
   const playerData = game.players.find((player) => player.id === playerId);
   const stopPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
   };
 
-  interface CDamage {
-    id: UUID;
-    commanderDamage: number;
-    name: string;
+  interface DamageObject {
+    damageDealer: UUID;
+    damage: number;
   }
+
+  interface DamageObjectWithCurrentDmg extends DamageObject {
+    currentDmg: number;
+  }
+
+  const handleAddDamage = ({ damageDealer, damage }: DamageObject) => {
+    dealCommanderDamage(playerId, damageDealer, damage);
+    updateLifeTotal(playerId, (playerData?.lifeTotal || 0) - 1);
+  };
+
+  const handleSubtractDamage = ({
+    damageDealer,
+    damage,
+    currentDmg,
+  }: DamageObjectWithCurrentDmg) => {
+    if (currentDmg === 0) return;
+    dealCommanderDamage(playerId, damageDealer, damage);
+    updateLifeTotal(playerId, (playerData?.lifeTotal || 0) + 1);
+  };
+
+  const handleCloseModal = () => {
+    openModalService.setSubject({ isOpen: false, playerId });
+  };
 
   const gridOfPlayers = (numberOfPlayers: number) => {
     switch (numberOfPlayers) {
@@ -41,7 +64,7 @@ const PlayerModal = ({ playerId }: PlayerModalProps) => {
   return (
     <div
       className="w-full h-full opacity-75 absolute top-0 bg-[#000] z-40 flex items-center justify-center"
-      onClick={() => setModalData({ val: false, playerId })}
+      onClick={handleCloseModal}
     >
       <div
         onClick={stopPropagation}
@@ -63,13 +86,20 @@ const PlayerModal = ({ playerId }: PlayerModalProps) => {
               <CommanderDamage
                 key={player.playerId}
                 on21Dmg={() => setDead(playerId)}
-                onAdd={() => {
-                  dealCommanderDamage(playerId, player.playerId, 1);
-                }}
+                onAdd={() =>
+                  handleAddDamage({
+                    damageDealer: player.playerId,
+                    damage: 1,
+                  })
+                }
                 currentDmg={player.damage || 0}
-                onSubtract={() => {
-                  dealCommanderDamage(playerId, player.playerId, -1);
-                }}
+                onSubtract={() =>
+                  handleSubtractDamage({
+                    damageDealer: player.playerId,
+                    damage: -1,
+                    currentDmg: player.damage || 0,
+                  })
+                }
               />
             </div>
           ))}

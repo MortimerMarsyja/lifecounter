@@ -1,7 +1,7 @@
 import PlayerModal from "@components/PlayerModal";
 import PlayersLayout from "@components/PlayersLayout";
+import openModalService from "@services/open-modal-service";
 import useGameStore from "@store/useGameStore";
-import usePlayerModalStore from "@store/usePlayerModalStore";
 import { useEffect } from "react";
 
 const vibrantColors = [
@@ -15,8 +15,10 @@ const vibrantColors = [
 
 const Game = (): JSX.Element => {
   const { game, setPlayerColor } = useGameStore();
-  const { modalData } = usePlayerModalStore();
-  console.log(modalData);
+  let modalData;
+  if (openModalService && openModalService.getSubject) {
+    modalData = openModalService.getSubject;
+  }
   useEffect(() => {
     game.players.forEach((player, idx) => {
       setPlayerColor(player.id, vibrantColors[idx]);
@@ -24,8 +26,8 @@ const Game = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="relative w-full h-full">
-      {modalData.isOpen && <PlayerModal playerId={modalData.playerId} />}
+    <div className="relative w-full h-full p-2">
+      {modalData?.isOpen && <PlayerModal playerId={modalData.playerId} />}
       {game.players.length ? <PlayersLayout game={game} /> : <>No players</>}
     </div>
   );

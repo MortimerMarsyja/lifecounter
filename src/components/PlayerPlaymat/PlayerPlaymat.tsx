@@ -1,5 +1,4 @@
-import { getBgColor } from '@utils/getBgColor';
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 
 interface GridFromTo {
   from: number;
@@ -10,7 +9,7 @@ interface PlayerPlaymat {
   background?: string;
   children?: React.ReactNode;
   style?: CSSProperties;
-  withRefData?:(refData:React.RefObject<HTMLDivElement>)=> void;
+  withRefData?: (refData: React.RefObject<HTMLDivElement>) => void;
 }
 
 interface PlayerPlaymatWithFromTo extends PlayerPlaymat {
@@ -23,21 +22,26 @@ interface PlayerPlaymatWithSpan extends PlayerPlaymat {
   colSpan?: number;
 }
 
-
-const PlayerPlaymat = (props: PlayerPlaymatWithFromTo | PlayerPlaymatWithSpan) => {
+const PlayerPlaymat = (
+  props: PlayerPlaymatWithFromTo | PlayerPlaymatWithSpan
+) => {
   const { background, children, style, withRefData } = props;
   const { rowFromTo, colFromTo } = props as PlayerPlaymatWithFromTo;
   const { rowSpan, colSpan } = props as PlayerPlaymatWithSpan;
-  const calculateColumnSpan = colSpan ? `span ${colSpan}` : `${colFromTo?.from} / ${colFromTo?.to}`;
-  const calculateRowSpan = rowSpan ? `span ${rowSpan}` : `${rowFromTo?.from} / ${rowFromTo?.to}`;
+  const calculateColumnSpan = colSpan
+    ? `span ${colSpan}`
+    : `${colFromTo?.from} / ${colFromTo?.to}`;
+  const calculateRowSpan = rowSpan
+    ? `span ${rowSpan}`
+    : `${rowFromTo?.from} / ${rowFromTo?.to}`;
   const playmatRef = useRef<HTMLDivElement>(null);
   const [playmatHeight, setPlaymatHeight] = useState(0);
   useEffect(() => {
-    const observer = new ResizeObserver(entries => {
+    const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.target === playmatRef.current) {
           setPlaymatHeight(entry.contentRect.height);
-          if(withRefData) withRefData(playmatRef)
+          if (withRefData) withRefData(playmatRef);
         }
       }
     });
@@ -52,19 +56,23 @@ const PlayerPlaymat = (props: PlayerPlaymatWithFromTo | PlayerPlaymatWithSpan) =
   }, [withRefData]);
 
   return (
-    <div 
+    <div
       ref={playmatRef}
-      style={{ 
-        backgroundColor: background, 
-        gridRow: `${calculateRowSpan}`, 
+      style={{
+        backgroundColor: background,
+        gridRow: `${calculateRowSpan}`,
         gridColumn: `${calculateColumnSpan}`,
-        ...style
-      }} 
+        ...style,
+      }}
       className="grid w-full h-full rounded-md relative items-stretch justify-items-stretch"
     >
-    {React.isValidElement(children) && React.cloneElement(children as React.ReactElement<{ playmatHeight?: number }>, { playmatHeight })}   
-  </div>
+      {React.isValidElement(children) &&
+        React.cloneElement(
+          children as React.ReactElement<{ playmatHeight?: number }>,
+          { playmatHeight }
+        )}
+    </div>
   );
-}
+};
 
 export default PlayerPlaymat;

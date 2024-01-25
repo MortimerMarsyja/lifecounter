@@ -1,9 +1,9 @@
-import { iGame } from "src/typings/GameTypes";
+import { iGame } from "@lib/definitions";
 import PlayerSeat from "@components/PlayerSeat";
 import LifeCounter from "@components/LifeCounter";
 import PlayerPlaymat from "@components/PlayerPlaymat/PlayerPlaymat";
 import { useState } from "react";
-import { getBgColor } from "@utils/getBgColor";
+import { getBgColor } from "@services/get-bg-color";
 
 interface Props {
   game: iGame;

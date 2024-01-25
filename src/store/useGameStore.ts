@@ -1,6 +1,6 @@
 import { UUID } from "crypto";
-import { iDayNight, iGame } from "src/typings/GameTypes";
-import { IntRange0To21, iPlayer } from "src/typings/Player";
+import { iDayNight, iGame } from "@lib/definitions";
+import { IntRange0To21, iPlayer } from "@lib/definitions";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { v4 as uuidv4 } from "uuid";
@@ -105,6 +105,7 @@ function handleDealCommanderDamage(
         }
         return dmg;
       });
+
       return { ...player, commanderDamage };
     }
     return player;
@@ -125,6 +126,7 @@ function handleChangePlayerColor(
 }
 
 const handleSetDayNight = (prevDayNight: iDayNight, dayNight: iDayNight) => {
+  console.log("someone called me");
   if (prevDayNight === "day" && dayNight === "night") return "night";
   if (prevDayNight === "night" && dayNight === "day") return "day";
   return "neutral";
@@ -303,7 +305,6 @@ export const useGameStore = create<GameState>()(
         })),
       dealCommanderDamage: (id, targetId, damage) => {
         set((state) => {
-          if (damage > 21 || damage < 0) return state;
           return {
             ...state,
             game: {

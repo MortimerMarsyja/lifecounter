@@ -1,8 +1,8 @@
-import { iPlayer } from "@typings/Player";
+import { iPlayer } from "@lib/definitions";
 import LifeControls from "./LifeControls";
 import TopLayer from "./TopLayer/TopLayer";
 import useGameStore from "@store/useGameStore";
-import usePlayerModalStore from "@store/usePlayerModalStore";
+import openModalService from "@services/open-modal-service";
 
 interface Props {
   playerObject: iPlayer;
@@ -11,7 +11,6 @@ interface Props {
 const LifeCounter = ({ playerObject }: Props) => {
   const { updateLifeTotal, updatePlayerName, game } = useGameStore();
   const { id, lifeTotal, name } = playerObject;
-  const { setModalData } = usePlayerModalStore();
   const onUpdateName = (newName: string) => {
     updatePlayerName(id, newName);
   };
@@ -22,7 +21,7 @@ const LifeCounter = ({ playerObject }: Props) => {
     updateLifeTotal(id, lifeTotal - 1);
   };
   const handleSetModalData = () => {
-    setModalData({ val: true, playerId: id });
+    openModalService.setSubject({ isOpen: true, playerId: id });
   };
   if (!playerObject) return;
   return (
